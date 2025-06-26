@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import api from "../Api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      // Simulate login by storing user data (for demo purposes)
-      localStorage.setItem("user", JSON.stringify({ email }));
-      navigate("/"); // Navigate to home after login
-    } else {
-      alert("Please fill in all fields!");
+    try {
+      const { data } = await api.post("/auth/login", { email, password });
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("user", JSON.stringify({ email: data.email, name: data.name, avatar: data.avatar }));
+      navigate("/");
+    } catch (err) {
+      alert(err.response?.data?.message || "Đăng nhập thất bại");
     }
   };
 
@@ -38,7 +39,7 @@ export default function Login() {
           <div>
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Mật khẩu"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -49,13 +50,13 @@ export default function Login() {
             type="submit"
             className="w-full bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
           >
-            Login
+            Đăng nhập
           </button>
         </form>
         <p className="text-center mt-4 text-gray-600">
-          Don’t have an account?{" "}
+          Chưa có tài khoản?{" "}
           <Link to="/register" className="text-blue-600 hover:underline">
-            Sign Up
+            Đăng ký
           </Link>
         </p>
       </div>

@@ -1,0 +1,28 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Gà nướng mật ong",
+      "category": "Món chính",
+      "cookingTime": 45,
+      "servings": 4,
+      "ingredients": ["Gà nguyên con 1kg", "Mật ong 2 muỗng", "Tỏi băm 1 muỗng", "Nước tương 3 muỗng"],
+      "instructions": "1. Ướp gà với mật ong, tỏi, nước tương trong 30 phút. 2. Nướng ở 180°C trong 45 phút.",
+      "nutrition": { "calories": 600, "protein": 50, "fat": 30, "carbs": 20 },
+      "image": "https://example.com/image1.jpg",
+      "rating": 4.5,
+      "comments": [],
+      "isFavorite": false
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "user@example.com",
+      "name": "Người dùng",
+      "avatar": "https://example.com/avatar.jpg",
+      "preferences": {}
+    }
+  ],
+  "favorites": []
+}
