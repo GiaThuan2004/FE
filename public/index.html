@@ -1,116 +1,13 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React Login App</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-router-dom@6/umd/react-router-dom.min.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-  <script type="text/babel">
-    const { BrowserRouter, Routes, Route, useNavigate, Link } = ReactRouterDOM;
 
-    function Home() {
-      return <h1 className="text-center mt-10 text-2xl">Welcome Home!</h1>;
-    }
-
-    function Register() {
-      return <h1 className="text-center mt-10 text-2xl">Register Page</h1>;
-    }
-
-    // Your existing Login component
-    function Login() {
-      const [email, setEmail] = React.useState("");
-      const [password, setPassword] = React.useState("");
-      const [remember, setRemember] = React.useState(false);
-      const navigate = useNavigate();
-
-      const handleLogin = (e) => {
-        e.preventDefault();
-        if (email && password) {
-          localStorage.setItem("user", JSON.stringify({ email }));
-          navigate("/");
-        } else {
-          alert("Please fill in all fields!");
-        }
-      };
-
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-          <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-semibold text-gray-800">Đăng Nhập</h2>
-            </div>
-            <form onSubmit={handleLogin} className="space-y-6">
-              <div>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
-              >
-                Login
-              </button>
-            </form>
-            <p className="text-center mt-4 text-gray-600">
-              Don’t have an account?{" "}
-              <Link to="/register" className="text-blue-600 hover:underline">
-                Sign Up
-              </Link>
-            </p>
-          </div>
-        </div>
-      );
-    }
-
-    // Set /login as the default route
-    function App() {
-      return (
-        <BrowserRouter basename="/login">
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
-      );
-    }
-
-    // Render the app
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Website Chia sẻ Công thức Nấu ăn</title>
+  
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <div id="root"></div>

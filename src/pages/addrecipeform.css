@@ -1,0 +1,131 @@
+/* Container chính để căn giữa form */
+.addrecipeform-container {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #7ba0ea;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  padding-top: 2rem;
+}
+
+/* Khung form tổng thể */
+.addrecipeform-wrapper {
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.addrecipeform-wrapper:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Tiêu đề */
+.addrecipeform-wrapper h2 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Nhóm input */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Thiết kế input và textarea */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #111827;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Grid cho thông tin dinh dưỡng */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+/* Nút thêm nguyên liệu */
+.add-ingredient-btn {
+  color: #2563eb;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.add-ingredient-btn:hover {
+  text-decoration: underline;
+}
+
+/* Nút submit */
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #10b981;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.submit-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+/* Animation khi form xuất hiện */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

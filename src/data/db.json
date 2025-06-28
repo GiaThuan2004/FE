@@ -1,0 +1,34 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Canh chua cá lóc",
+      "description": "Một món canh chua đặc trưng của miền Tây Nam Bộ, thơm ngon và bổ dưỡng.",
+      "category": "Món soup",
+      "cookingTime": 40,
+      "servings": 3,
+      "ingredients": ["Cá lóc 500g", "Cà chua 2 quả", "Dứa 1/4 quả", "Me chua 1 muỗng", "Rau om"],
+      "instructions": "1. Làm sạch cá, cắt khúc. 2. Nấu nước dùng với me, thêm cà chua và dứa. 3. Thả cá vào, nêm nếm gia vị, thêm rau om trước khi tắt bếp.",
+      "nutrition": { "calories": 300, "protein": 25, "fat": 10, "carbs": 15 },
+      "image": "https://example.com/canh-chua.jpg",
+      "rating": 4.2,
+      "comments": [],
+      "isFavorite": false
+    },
+    {
+      "id": 2,
+      "title": "Bánh xèo giòn rụm",
+      "description": "Bánh xèo vàng giòn, ăn kèm rau sống và nước mắm chua ngọt.",
+      "category": "Món chính",
+      "cookingTime": 30,
+      "servings": 4,
+      "ingredients": ["Bột gạo 200g", "Nước cốt dừa 100ml", "Tôm 200g", "Đậu xanh", "Hành lá"],
+      "instructions": "1. Trộn bột với nước cốt dừa, để nghỉ 30 phút. 2. Nhồi đậu xanh, thêm tôm, chiên vàng trên chảo. 3. Rắc hành lá, gấp đôi bánh.",
+      "nutrition": { "calories": 450, "protein": 15, "fat": 20, "carbs": 55 },
+      "image": "https://example.com/banh-xeo.jpg",
+      "rating": 4.7,
+      "comments": [],
+      "isFavorite": false
+    }
+  ]
+}

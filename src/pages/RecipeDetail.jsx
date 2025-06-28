@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../Api";
 import { FaHeart, FaShareAlt } from "react-icons/fa";
 
 export default function RecipeDetail() {
@@ -8,67 +7,114 @@ export default function RecipeDetail() {
   const [recipe, setRecipe] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
   const navigate = useNavigate();
 
+  // Dữ liệu mẫu ban đầu
+  const sampleRecipes = [
+    {
+      id: 1,
+      title: "Canh chua cá lóc",
+      description: "Một món canh chua đặc trưng của miền Tây Nam Bộ, thơm ngon và bổ dưỡng.",
+      category: "Món soup",
+      cookingTime: 40,
+      servings: 3,
+      ingredients: ["Cá lóc 500g", "Cà chua 2 quả", "Dứa 1/4 quả", "Me chua 1 muỗng", "Rau om"],
+      instructions: "1. Làm sạch cá, cắt khúc. 2. Nấu nước dùng với me, thêm cà chua và dứa. 3. Thả cá vào, nêm nếm gia vị, thêm rau om trước khi tắt bếp.",
+      nutrition: { calories: 300, protein: 25, fat: 10, carbs: 15 },
+      image: "https://example.com/canh-chua.jpg",
+      rating: 4.2,
+      comments: [],
+      isFavorite: false
+    },
+    {
+      id: 2,
+      title: "Bánh xèo giòn rụm",
+      description: "Bánh xèo vàng giòn, ăn kèm rau sống và nước mắm chua ngọt.",
+      category: "Món chính",
+      cookingTime: 30,
+      servings: 4,
+      ingredients: ["Bột gạo 200g", "Nước cốt dừa 100ml", "Tôm 200g", "Đậu xanh", "Hành lá"],
+      instructions: "1. Trộn bột với nước cốt dừa, để nghỉ 30 phút. 2. Nhồi đậu xanh, thêm tôm, chiên vàng trên chảo. 3. Rắc hành lá, gấp đôi bánh.",
+      nutrition: { calories: 450, protein: 15, fat: 20, carbs: 55 },
+      image: "https://example.com/banh-xeo.jpg",
+      rating: 4.7,
+      comments: [],
+      isFavorite: false
+    }
+  ];
+
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.get(`/recipes/${id}`);
-        setRecipe(data);
-        setComments(data.comments || []);
-        setIsFavorite(data.isFavorite || false);
-        setRating(data.rating || 0);
-      } catch {
-        alert("Không lấy được chi tiết công thức");
-      }
-    })();
+    // Lấy danh sách công thức từ localStorage hoặc sử dụng sampleRecipes
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || sampleRecipes;
+    const selectedRecipe = storedRecipes.find((r) => r.id === parseInt(id));
+    if (selectedRecipe) {
+      setRecipe(selectedRecipe);
+      setComments(selectedRecipe.comments || []);
+      setIsFavorite(selectedRecipe.isFavorite || false);
+      setRating(selectedRecipe.rating || 0);
+    } else {
+      setRecipe(null);
+      alert(`Không tìm thấy công thức với ID ${id}`);
+    }
   }, [id]);
 
-  const handleFavorite = async () => {
-    try {
-      await api.post(`/recipes/${id}/favorite`, { favorite: !isFavorite });
+  const saveToLocalStorage = (updatedRecipe) => {
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || sampleRecipes;
+    const updatedRecipes = storedRecipes.map((r) =>
+      r.id === updatedRecipe.id ? updatedRecipe : r
+    );
+    localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+  };
+
+  const handleFavorite = () => {
+    if (recipe) {
+      const updatedRecipe = { ...recipe, isFavorite: !isFavorite };
       setIsFavorite(!isFavorite);
-    } catch {
-      alert("Không thể thêm vào yêu thích");
+      saveToLocalStorage(updatedRecipe);
+      console.log(`Đã ${isFavorite ? "bỏ" : ""} yêu thích công thức ${recipe.title}`);
     }
   };
 
-  const handleRating = async (value) => {
-    try {
-      await api.post(`/recipes/${id}/rate`, { stars: value });
-      setRating(value);
-    } catch {
-      alert("Không thể đánh giá");
+  const handleRating = (value) => {
+    if (recipe) {
+      const updatedRecipe = { ...recipe, rating: value };
+      setRating(value); // Cập nhật trạng thái cục bộ
+      saveToLocalStorage(updatedRecipe); // Lưu vào localStorage
+      console.log(`Đánh giá công thức ${recipe.title} với ${value} sao`);
     }
   };
 
-  const handleComment = async (e) => {
+  const handleComment = (e) => {
     e.preventDefault();
     if (comment.length > 500) return alert("Bình luận tối đa 500 ký tự");
-    try {
-      const { data } = await api.post(`/recipes/${id}/comment`, { content: comment });
-      setComments([...comments, data]);
+    if (recipe) {
+      const newComment = { content: comment, user: "Anonymous", date: new Date().toISOString() };
+      const updatedComments = [...comments, newComment];
+      const updatedRecipe = { ...recipe, comments: updatedComments };
+      setComments(updatedComments);
       setComment("");
-    } catch {
-      alert("Không thể gửi bình luận");
+      saveToLocalStorage(updatedRecipe);
+      console.log(`Đã thêm bình luận cho công thức ${recipe.title}`);
     }
   };
 
-  const handleShare = async (platform) => {
+  const handleShare = (platform) => {
     const url = window.location.href;
     if (platform === "copy") {
-      await navigator.clipboard.writeText(url);
+      navigator.clipboard.writeText(url);
       alert("Đã sao chép liên kết!");
     } else if (platform === "twitter") {
-      window.open(`https://twitter.com/intent/tweet?url=${url}&text=Chia sẻ công thức: ${recipe.title}`);
+      window.open(
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=Chia sẻ công thức: ${encodeURIComponent(recipe.title)}`
+      );
     } else if (platform === "facebook") {
-      windowFacbook.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
     }
   };
 
-  if (!recipe) return <div>Đang tải...</div>;
+  if (!recipe) return <div>Đang tải hoặc không tìm thấy công thức...</div>;
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-4">
@@ -78,7 +124,7 @@ export default function RecipeDetail() {
         className="w-[200px] h-[200px] object-cover mx-auto mb-4"
       />
       <h2 className="text-2xl font-bold mb-2">{recipe.title}</h2>
-      <p className="text-gray-600 mb-2">{recipe.description}</p>
+      <p className="text-gray-600 mb-2">{recipe.description || "Không có mô tả"}</p>
       <p className="text-gray-600 mb-2">Danh mục: {recipe.category}</p>
       <p className="text-gray-600 mb-2">Thời gian nấu: {recipe.cookingTime} phút</p>
       <p className="text-gray-600 mb-2">Khẩu phần: {recipe.servings}</p>
@@ -96,10 +142,10 @@ export default function RecipeDetail() {
       </div>
       <div className="mb-4">
         <h3 className="font-semibold">Dinh dưỡng:</h3>
-        <p>Calories: {recipe.nutrition.calories} kcal</p>
-        <p>Protein: {recipe.nutrition.protein}g</p>
-        <p>Fat: {recipe.nutrition.fat}g</p>
-        <p>Carbs: {recipe.nutrition.carbs}g</p>
+        <p>Calories: {recipe.nutrition?.calories || 0} kcal</p>
+        <p>Protein: {recipe.nutrition?.protein || 0}g</p>
+        <p>Fat: {recipe.nutrition?.fat || 0}g</p>
+        <p>Carbs: {recipe.nutrition?.carbs || 0}g</p>
       </div>
       <div className="flex space-x-4 mb-4">
         <button onClick={handleFavorite} className="flex items-center space-x-2">
@@ -144,7 +190,9 @@ export default function RecipeDetail() {
         </form>
         <ul className="list-disc pl-5">
           {comments.map((cmt, idx) => (
-            <li key={idx}>{cmt.content} - {cmt.user} ({cmt.date})</li>
+            <li key={idx}>
+              {cmt.content} - {cmt.user} ({new Date(cmt.date).toLocaleDateString()})
+            </li>
           ))}
         </ul>
       </div>

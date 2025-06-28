@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RecipeList from "./pages/RecipeList";
@@ -12,7 +12,7 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <div>
       <nav className="bg-white shadow p-4 flex justify-between items-center">
         <div className="logo font-bold text-xl">🍳 Công thức Nấu ăn</div>
         <div className="space-x-4">
@@ -26,12 +26,10 @@ function App() {
       </nav>
       <div className="container">
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<RecipeList />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* Private Routes */}
           <Route element={<PrivateRoute />}>
             <Route path="/create-recipe" element={<RecipeForm />} />
             <Route path="/edit-recipe/:id" element={<RecipeForm />} />
@@ -40,7 +38,7 @@ function App() {
           </Route>
         </Routes>
       </div>
-    </Router>
+    </div>
   );
 }
 
